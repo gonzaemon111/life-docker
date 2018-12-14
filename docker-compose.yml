@@ -1,0 +1,79 @@
+version: "3"
+services:
+  db:
+    image: mysql:5.7 #mysql5.7が準備されているimageを指定
+    ports:
+      - "3306:3306" # <-これがないと外からアクセス出来ない
+      - "33060:33060"
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root #root userのパスワード
+      MYSQL_SOCKET: "/var/lib/mysql/mysql.sock"
+      MYSQL_HOST: db
+  
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+  
+  elastic-search:
+    container_name: xtreme-elastic-search
+    build:
+     context: .
+     dockerfile: ./elastic-search/dev.Dockerfile
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+#    volumes:
+#      - xtreme-elastic-search:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+  
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    command: --smallfiles
+
+  webapp_server:
+    build: ./xtreme_alpha/
+    restart: always
+    container_name: xtreme_server
+    environment:
+      TZ: "Asia/Tokyo"
+      MYSQL_SOCKET: "/var/lib/mysql/mysql.sock"
+      MYSQL_PASSWORD: root
+      MYSQL_HOST: db
+    tty: true #標準出力on
+    depends_on:
+      - db
+      - redis
+      - elastic-search
+      - mongodb
+    ports:
+      - "4000:3000"
+    volumes:
+      - server-sync:/home/server
+    command: >
+              bash -c 'bundle exec rails db:create && 
+              bundle exec rails db:migrate &&
+              bundle exec sidekiq -C config/sidekiq.yml -d &&
+              bundle exec rails server -b 0.0.0.0'
+  
+  webapp_frontend:
+    build: ./xtreme-frontend/
+    restart: always
+    container_name: xtreme_frontend
+    privileged: true #特権モード
+    tty: true
+    ports:
+      - "3001:3000"
+    volumes:
+      - frontend-sync:/home/xtreme_frontend
+    command: yarn dev
+volumes:
+  server-sync:
+    external: true
+  frontend-sync:
+    external: true
