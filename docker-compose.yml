@@ -1,6 +1,6 @@
 version: "3"
 services:
-  db:
+  life_db:
     image: mysql:5.7 #mysql5.7が準備されているimageを指定
     ports:
       - "3306:3306" # <-これがないと外からアクセス出来ない
@@ -11,12 +11,12 @@ services:
       MYSQL_SOCKET: "/var/lib/mysql/mysql.sock"
       MYSQL_HOST: db
   
-  redis:
+  life_redis:
     image: redis:alpine
     ports:
       - "6379:6379"
   
-  elastic-search:
+  life_elastic-search:
     container_name: life-elastic-search
     build:
      context: .
@@ -30,13 +30,13 @@ services:
       - "9200:9200"
       - "9300:9300"
   
-  mongodb:
+  life_mongodb:
     image: mongo:latest
     ports:
       - "27017:27017"
     command: --smallfiles
 
-  webapp_server:
+  life_server:
     build: ./life_server/
     restart: always
     container_name: life_server
@@ -47,10 +47,10 @@ services:
       MYSQL_HOST: db
     tty: true #標準出力on
     depends_on:
-      - db
-      - redis
-      - elastic-search
-      - mongodb
+      - life_db
+      - life_redis
+      - life_elastic-search
+      - life_mongodb
     ports:
       - "3002:3000"
     volumes:
@@ -61,7 +61,7 @@ services:
               bundle exec sidekiq -C config/sidekiq.yml -d &&
               bundle exec rails server -b 0.0.0.0'
   
-  webapp_frontend:
+  life_frontend:
     build: ./life-frontend/
     restart: always
     container_name: life_frontend
