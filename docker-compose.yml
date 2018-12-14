@@ -17,7 +17,7 @@ services:
       - "6379:6379"
   
   elastic-search:
-    container_name: xtreme-elastic-search
+    container_name: life-elastic-search
     build:
      context: .
      dockerfile: ./elastic-search/dev.Dockerfile
@@ -25,7 +25,7 @@ services:
       - discovery.type=single-node
       - xpack.security.enabled=false
 #    volumes:
-#      - xtreme-elastic-search:/usr/share/elasticsearch/data
+#      - life-elastic-search:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -37,9 +37,9 @@ services:
     command: --smallfiles
 
   webapp_server:
-    build: ./xtreme_alpha/
+    build: ./life_server/
     restart: always
-    container_name: xtreme_server
+    container_name: life_server
     environment:
       TZ: "Asia/Tokyo"
       MYSQL_SOCKET: "/var/lib/mysql/mysql.sock"
@@ -52,9 +52,9 @@ services:
       - elastic-search
       - mongodb
     ports:
-      - "4000:3000"
+      - "3002:3000"
     volumes:
-      - server-sync:/home/server
+      - server-sync:/home/life_server
     command: >
               bash -c 'bundle exec rails db:create && 
               bundle exec rails db:migrate &&
@@ -62,15 +62,15 @@ services:
               bundle exec rails server -b 0.0.0.0'
   
   webapp_frontend:
-    build: ./xtreme-frontend/
+    build: ./life-frontend/
     restart: always
-    container_name: xtreme_frontend
+    container_name: life_frontend
     privileged: true #特権モード
     tty: true
     ports:
       - "3001:3000"
     volumes:
-      - frontend-sync:/home/xtreme_frontend
+      - frontend-sync:/home/life_frontend
     command: yarn dev
 volumes:
   server-sync:
