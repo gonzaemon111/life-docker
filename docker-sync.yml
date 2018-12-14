@@ -3,13 +3,13 @@ options:
   verbose: true
 syncs:
   server-sync:
-    src: './xtreme_alpha/'
+    src: './life_server/'
     notify_terminal: true
     sync_strategy: 'unison'
     sync_userid: '1000'
     sync_excludes: ['converage', '.git', '.gitignore', 'package.json', '*.coffee', '*.scss', '*.sass']
   frontend-sync:
-    src: './xtreme-frontend/'
+    src: './life-frontend/'
     notify_terminal: true
     sync_strategy: 'unison'
     sync_userid: '2000'
