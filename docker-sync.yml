@@ -5,12 +5,16 @@ syncs:
   server-sync:
     src: './life_server/'
     notify_terminal: true
+    sync_host_ip: '0.0.0.0'
+    sync_host_port: '6000'
     sync_strategy: 'unison'
-    sync_userid: '1000'
+    sync_userid: '3000'
     sync_excludes: ['converage', '.git', '.gitignore', 'package.json', '*.coffee', '*.scss', '*.sass']
   frontend-sync:
     src: './life-frontend/'
     notify_terminal: true
+    sync_host_ip: '0.0.0.0'
+    sync_host_port: '6000'
     sync_strategy: 'unison'
-    sync_userid: '2000'
+    sync_userid: '4000'
     sync_excludes: ['node_modules', '.git', '.gitignore', '*.coffee']
