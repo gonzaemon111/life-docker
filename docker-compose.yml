@@ -36,10 +36,10 @@ services:
       - "27017:27017"
     command: --smallfiles
 
-  life_server:
-    build: ./life_server/
+  life:
+    build: ./life/
     restart: always
-    container_name: life_server
+    container_name: life
     environment:
       TZ: "Asia/Tokyo"
       MYSQL_SOCKET: "/var/lib/mysql/mysql.sock"
