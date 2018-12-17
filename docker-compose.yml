@@ -71,7 +71,7 @@ services:
       - "3001:3000"
     volumes:
       - frontend-sync:/home/life_frontend
-    command: yarn dev
+    command: yarn run dev
 volumes:
   server-sync:
     external: true
