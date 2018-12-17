@@ -9,7 +9,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root #root userのパスワード
       MYSQL_SOCKET: "/var/lib/mysql/mysql.sock"
-      MYSQL_HOST: db
+      MYSQL_HOST: life_db
   
   life_redis:
     image: redis:alpine
@@ -44,7 +44,7 @@ services:
       TZ: "Asia/Tokyo"
       MYSQL_SOCKET: "/var/lib/mysql/mysql.sock"
       MYSQL_PASSWORD: root
-      MYSQL_HOST: db
+      MYSQL_HOST: life_db
     tty: true #標準出力on
     depends_on:
       - life_db
