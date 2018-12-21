@@ -76,7 +76,9 @@ life-docker
 6. **dockerの中に入るコマンド**
 
     ```
-    $ docker exec -it life_server bash  (Rails側)
+    $ docker exec -it [コンテナ名] [シェルの指定]
+
+    $ docker exec -it life bash  (Rails側)
 
     $ docker exec -it life_frontend sh  (Nuxt側)
     ```
