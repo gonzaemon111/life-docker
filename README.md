@@ -88,5 +88,4 @@ life-docker
     ```
     1. 基本的にdocker内で rails g コマンドなどを実行
     2. docker内でgitはサポートしていないため、gitはローカルで行う。
-    3. サーバサイドはdocker内の/home/life_serverとmacのlife_docker/lifeがsyncしているため、docker内に入ったときは/home/lifeがカレントディレクトリにいるため cd ../life_server で移動する。
     ```
