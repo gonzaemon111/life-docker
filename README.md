@@ -47,19 +47,14 @@ life-docker
     $ bundle install
     ```
 
----
+4. **サブモジュール関連**
 
-ここからは、gonzaemon111のリポジトリのcontributerにならないと無理
+    各サブモジュールがgit管理下のため各ディレクトリではいつも通りにgit使えばOK
 
+    サブモジュールによってbackendとfrontendのバージョン管理が可能になる
 
-
-4. **他のリポジトリをclone**
-
-    ```
-    $ git clone git@github.com:gonzaemon111/life-frontend.git
-
-    $ git clone git@github.com:gonzaemon111/life_server.git
-    ```
+    詳しく知りたければググったりこれとか参考にしてください
+    https://qiita.com/kinpira/items/3309eb2e5a9a422199e9
 
 5. **dockerを起動**
 
@@ -70,7 +65,7 @@ life-docker
 
     $ docker-compose up -d
 
-    $ docker-compose ps  # dockerプロセスの確認コマンド
+    $ docker-compose ps  # dockerプロセスの確認コマンド
     ```
 
 6. **dockerの中に入るコマンド**
