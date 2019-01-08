@@ -1,6 +1,0 @@
-[submodule "life"]
-	path = life
-	url = git@github.com:gonzaemon111/life.git
-[submodule "life-frontend"]
-	path = life-frontend
-	url = git@github.com:gonzaemon111/life-frontend.git
