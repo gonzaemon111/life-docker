@@ -2,3 +2,4 @@ life-frontend
 life
 .docker-sync/*
 .vscode/
+.bundle
