@@ -1,13 +1,13 @@
 version: "3"
 services:
   life_db:
-    image: mysql:5.7 #mysql5.7が準備されているimageを指定
+    image: mysql:5.7
     ports:
-      - "3306:3306" # <-これがないと外からアクセス出来ない
+      - "3306:3306"
       - "33060:33060"
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     environment:
-      MYSQL_ROOT_PASSWORD: root #root userのパスワード
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_SOCKET: "/var/lib/mysql/mysql.sock"
       MYSQL_HOST: life_db
   
@@ -24,8 +24,6 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
-#    volumes:
-#      - life-elastic-search:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -38,14 +36,11 @@ services:
 
   life:
     build: ./life/
-    restart: always
     container_name: life
-    environment:
-      TZ: "Asia/Tokyo"
-      MYSQL_SOCKET: "/var/lib/mysql/mysql.sock"
-      MYSQL_PASSWORD: root
-      MYSQL_HOST: life_db
+    env_file:
+      - variable.env
     tty: true #標準出力on
+    stdin_open: true
     depends_on:
       - life_db
       - life_redis
@@ -54,7 +49,7 @@ services:
     ports:
       - "3002:3000"
     volumes:
-      - server-sync:/home/life_server
+      - life-server-sync:/home/life_server
     command: >
               bash -c '
               bundle exec rails db:create && 
@@ -64,17 +59,18 @@ services:
   
   life_frontend:
     build: ./life-frontend/
-    restart: always
     container_name: life_frontend
-    privileged: true #特権モード
+    privileged: true
     tty: true
+    stdin_open: true
+    volumes:
+      - life-frontend-sync:/life_frontend
     ports:
       - "3001:3000"
-    volumes:
-      - frontend-sync:/life_frontend
     command: yarn run dev
+
 volumes:
-  server-sync:
+  life-server-sync:
     external: true
-  frontend-sync:
+  life-frontend-sync:
     external: true
