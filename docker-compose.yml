@@ -38,7 +38,7 @@ services:
     build: ./life/
     container_name: life
     env_file:
-      - variable.env
+      - variables.env
     tty: true #標準出力on
     stdin_open: true
     depends_on:
