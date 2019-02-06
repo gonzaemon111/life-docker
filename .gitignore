@@ -2,3 +2,6 @@ life-frontend
 life
 .docker-sync/*
 .vscode/
+variables.env
+elastic-search/data
+mysql/datastore
