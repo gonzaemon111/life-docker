@@ -5,3 +5,4 @@ life
 variables.env
 elastic-search/data
 mysql/datastore
+.bundle
