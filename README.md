@@ -35,15 +35,18 @@ life-docker
 
     ```
     $ git clone git@github.com:gonzaemon111/life-docker.git
+    $ rm -rf life && rm -rf life-frontend
+    $ git clone git@github.com:gonzaemon111/life.git
+    $ git clone git@github.com:gonzaemon111/life-frontend.git
     ```
 
 3. **DockerSyncに必要な諸々をインストール**
 
     ```
-    $ gem install docker-sync
-
     $ brew install unison
-
+    $ brew tap eugenmayer/dockersync
+    $ brew install eugenmayer/dockersync/unox
+    $ pwd (current-directoriがlife-dokcerであることを確認)
     $ bundle install
     ```
 
@@ -58,23 +61,32 @@ life-docker
 
 5. **dockerを起動**
 
+    AかBのいずれかの方法で起動
+
+    A docker-sync と docker-composeを同時に起動
+
     ```
     $ docker-compose build
+    $ bundle exec docker-sync-stack start (やめる時は Ctr-C)
+    ```
 
-    $ docker-sync start
-
+    B ばらばらで起動
+    ```
+    $ docker-compose build
+    $ bundle exec docker-sync start
     $ docker-compose up -d
-
     $ docker-compose ps  # dockerプロセスの確認コマンド
+
+    終わる時
+    $ docker-compose down
+    $ bundle exec docker-sync stop
     ```
 
 6. **dockerの中に入るコマンド**
 
     ```
     $ docker exec -it [コンテナ名] [シェルの指定]
-
     $ docker exec -it life bash  (Rails側)
-
     $ docker exec -it life_frontend sh  (Nuxt側)
     ```
 
