@@ -15,18 +15,29 @@ services:
     image: redis:alpine
     ports:
       - "6379:6379"
-  
-  life_elastic-search:
+
+  elasticsearch:
     container_name: life-elastic-search
-    build:
-     context: .
-     dockerfile: ./elastic-search/dev.Dockerfile
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=false
+    build: es
+    volumes:
+        - es-data:/usr/share/elasticsearch/data
+        - ./es/config:/usr/share/elasticsearch/config
     ports:
-      - "9200:9200"
-      - "9300:9300"
+        - 9200:9200
+    expose:
+        - 9300
+    ulimits:
+        nofile:
+            soft: 65536
+            hard: 65536
+        # https://github.com/docker-library/elasticsearch/issues/111
+        # uliimit
+  kibana:
+    build: kibana
+    links:
+        - elasticsearch:elasticsearch
+    ports:
+        - 5601:5601
   
   life_mongodb:
     image: mongo:latest
@@ -69,28 +80,6 @@ services:
     ports:
       - "3001:3000"
     command: yarn run dev
-
-  elasticsearch:
-    build: es
-    volumes:
-        - es-data:/usr/share/elasticsearch/data
-        - ./es/config:/usr/share/elasticsearch/config
-    ports:
-        - 9200:9200
-    expose:
-        - 9300
-    ulimits:
-        nofile:
-            soft: 65536
-            hard: 65536
-        # https://github.com/docker-library/elasticsearch/issues/111
-        # uliimit
-  kibana:
-    build: kibana
-    links:
-        - elasticsearch:elasticsearch
-    ports:
-        - 5601:5601
 
 volumes:
   life-server-sync:
