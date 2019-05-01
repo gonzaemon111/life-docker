@@ -19,7 +19,7 @@ services:
   elasticsearch:
     build: elasticsearch
     volumes:
-        - ./elasticsearch/data/:/usr/share/elasticsearch/data/
+        - es-data:/usr/share/elasticsearch/data/
     ports:
         - 9200:9200
     expose:
