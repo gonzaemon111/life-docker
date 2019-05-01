@@ -15,18 +15,19 @@ services:
     image: redis:alpine
     ports:
       - "6379:6379"
-  
-  life_elastic-search:
-    container_name: life-elastic-search
-    build:
-     context: .
-     dockerfile: ./elastic-search/dev.Dockerfile
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=false
+
+  elasticsearch:
+    build: elasticsearch
+    volumes:
+        - ./elasticsearch/data/:/usr/share/elasticsearch/data/
     ports:
-      - "9200:9200"
-      - "9300:9300"
+        - 9200:9200
+    expose:
+        - 9300
+  kibana:
+    build: kibana
+    ports:
+        - 5601:5601
   
   life_mongodb:
     image: mongo:latest
@@ -44,7 +45,7 @@ services:
     depends_on:
       - life_db
       - life_redis
-      - life_elastic-search
+      - elasticsearch
       - life_mongodb
     ports:
       - "3002:3000"
@@ -75,3 +76,5 @@ volumes:
     external: true
   life-frontend-sync:
     external: true
+  es-data:
+        driver: local
