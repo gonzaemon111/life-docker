@@ -3,6 +3,6 @@ life
 .docker-sync/*
 .vscode/
 variables.env
-elastic-search/data
+elasticsearch/data
 mysql/datastore
 .bundle
