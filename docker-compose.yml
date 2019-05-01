@@ -55,7 +55,7 @@ services:
     depends_on:
       - life_db
       - life_redis
-      - life_elastic-search
+      - elasticsearch
       - life_mongodb
     ports:
       - "3002:3000"

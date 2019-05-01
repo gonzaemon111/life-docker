@@ -1,4 +1,4 @@
-FROM kibana:7.0
+FROM kibana:7.0.0
 
 # x-pack をインストール
-RUN kibana-plugin install x-pack
+# RUN kibana-plugin install x-pack
