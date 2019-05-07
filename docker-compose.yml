@@ -25,7 +25,6 @@ services:
       MB_DB_HOST: life_db
     depends_on:
       - life_db
-      - life
   
   life_redis:
     image: redis:alpine
