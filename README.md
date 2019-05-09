@@ -96,3 +96,51 @@ life-docker
     1. 基本的にdocker内で rails g コマンドなどを実行
     2. docker内でgitはサポートしていないため、gitはローカルで行う。
     ```
+
+
+*  shellファイルを使った環境構築
+
+```
+$ ./dc_up.sh
+    -> bundle install -j4
+    -> bundle exec docker-sync start
+    -> docker-compose up -d
+    -> docker-compose ps
+
+$ ./dc_up.sh build
+    -> 上記の処理の前に docker-compose build を実行してくれる
+```
+
+
+---
+
+### docker-compose up　で見れるGUI
+
+| frontend | server | server routing | server admin | MySQL | Redis | ElasticSearch Kibana | DynamoDB
+| :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: |
+| http://localhost:3001/ | http://localhost:3002/ | http://localhost:3002/rails/info/routes | http://localhost:3002/admin | http://localhost:3004 | http://localhost:3005/ | http://localhost:3006/ | http://localhost:3007/
+
+----
+
+### `life/app`ディレクトリの配下について
+
+```
+life/app
+  ┣━ admin (管理画面用のモデル群)
+  ┣━ assets
+  ┣━ batches (バッチ処理 ※基本的にはworkerからの移譲を待つ)
+  ┣━ channels (ActionCable)
+  ┣━ controllers
+  ┣━ decorators (draperを使ったデコレータ)
+  ┣━ filters  (複雑なvalidation時に使用)
+  ┣━ helpers  (draperを使っているため未使用)
+  ┣━ forms  (formオブジェクト vcalidation用)
+  ┣━ jobs (action-job用)
+  ┣━ mailers (action-mailer用)
+  ┣━ models (モデル)
+  ┣━ queries (クエリ用サービス層 主にindexアクション時に使用)
+  ┣━ usecases (controllerの処理の移譲用サービス層 主にindex以外のアクション時に使用)
+  ┣━ validators (Validators)
+  ┣━ views (views)
+  ┗━ workers (Sidekiq用 処理はbatchesに移譲)
+```
