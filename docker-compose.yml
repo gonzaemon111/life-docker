@@ -112,10 +112,9 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - life-frontend-sync:/life_frontend
+      - life-frontend-sync:/app
     ports:
       - "3001:3000"
-    command: yarn run dev
 
 volumes:
   life-server-sync:
