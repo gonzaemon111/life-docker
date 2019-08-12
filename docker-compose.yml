@@ -67,6 +67,18 @@ services:
     ports:
         - 3006:5601
   
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+    command: [server, /data]
+    volumes:
+      - minio:/export
+    environment:
+      MINIO_ACCESS_KEY: $MINIO_ACCESS_KEY
+      MINIO_SECRET_KEY: $MINIO_SECRET_KEY
+    restart: always
+  
   life_dynamodb:
     image: deangiberson/aws-dynamodb-local
     ports:
@@ -123,4 +135,6 @@ volumes:
   life-frontend-sync:
     external: true
   es-data:
+    driver: local
+  minio:
     driver: local

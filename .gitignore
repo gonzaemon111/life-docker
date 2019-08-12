@@ -6,3 +6,4 @@ variables.env
 elasticsearch/data
 mysql/datastore
 .bundle
+.env
