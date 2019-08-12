@@ -116,9 +116,9 @@ $ ./dc_up.sh build
 
 ### docker-compose up　で見れるGUI
 
-| frontend | server | server routing | server admin | MySQL | Redis | ElasticSearch Kibana | DynamoDB
-| :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: |
-| http://localhost:3001/ | http://localhost:3002/ | http://localhost:3002/rails/info/routes | http://localhost:3002/admin | http://localhost:3004 | http://localhost:3005/ | http://localhost:3006/ | http://localhost:3007/
+| frontend | server | server routing | server admin | MySQL | Redis | ElasticSearch Kibana | DynamoDB | minio
+| :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: | :--------: |
+| http://localhost:3001/ | http://localhost:3002/ | http://localhost:3002/rails/info/routes | http://localhost:3002/admin | http://localhost:3004 | http://localhost:3005/ | http://localhost:3006/ | http://localhost:3007/ | http://localhost:9000/
 
 ----
 
