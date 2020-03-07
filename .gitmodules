@@ -1,6 +1,0 @@
-[submodule "waffle"]
-	path = waffle
-	url = git@github.com:gonzaemon111/waffle.git
-[submodule "waffle-web"]
-	path = waffle-web
-	url = git@github.com:gonzaemon111/waffle-web.git
