@@ -1,6 +1,6 @@
 version: "3"
 services:
-  life_db:
+  waffle_db:
     image: mysql:5.7
     ports:
       - "3306:3306"
@@ -9,22 +9,22 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_SOCKET: "/var/lib/mysql/mysql.sock"
-      MYSQL_HOST: life_db
+      MYSQL_HOST: waffle_db
 
-  life_dbadmin:
+  waffle_dbadmin:
     image: phpmyadmin/phpmyadmin
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=life_db
+      - PMA_HOST=waffle_db
       - PMA_USER=root
       - PMA_PASSWORD=root
     links:
-      - life_db
+      - waffle_db
     ports:
       - 3004:80
 
 
-  life_metabase:
+  waffle_metabase:
     image: metabase/metabase
     ports:
       - "3003:3000"
@@ -35,20 +35,20 @@ services:
       MB_DB_PORT: 3306
       MB_DB_USER: root
       MB_DB_PASS: root
-      MB_DB_HOST: life_db
+      MB_DB_HOST: waffle_db
     depends_on:
-      - life_db
+      - waffle_db
   
-  life_redis:
+  waffle_redis:
     image: redis:alpine
     ports:
       - "6379:6379"
 
-  life_redis_commander:
+  waffle_redis_commander:
     image: tenstartups/redis-commander
-    command: --redis-host life_redis
+    command: --redis-host waffle_redis
     links:
-      - life_redis
+      - waffle_redis
     ports:
       - "3005:8081"
 
@@ -67,36 +67,36 @@ services:
     ports:
         - 3006:5601
   
-  life_dynamodb:
+  waffle_dynamodb:
     image: deangiberson/aws-dynamodb-local
     ports:
       - "8000:8000"
     environment:
       DEFAULT_REGION: ap-northeast-3
 
-  life_dynamodb_admin:
+  waffle_dynamodb_admin:
     image: instructure/dynamo-local-admin
     ports:
       - "3007:8001"
     environment:
-      DYNAMO_ENDPOINT: http://life_dynamodb:8000/
+      DYNAMO_ENDPOINT: http://waffle_dynamodb:8000/
 
-  life:
-    build: ./life/
-    container_name: life
+  waffle:
+    build: ./waffle/
+    container_name: waffle
     env_file:
       - variables.env
     tty: true #標準出力on
     stdin_open: true
     depends_on:
-      - life_db
-      - life_redis
+      - waffle_db
+      - waffle_redis
       - elasticsearch
-      - life_dynamodb
+      - waffle_dynamodb
     ports:
-      - "3002:3000"
+      - "3001:3000"
     volumes:
-      - life-server-sync:/home/life_server
+      - waffle-server-sync:/home/waffle_server
     command: >
               bash -c '
               bundle exec rails db:create && 
@@ -105,22 +105,9 @@ services:
               bundle exec sidekiq -C config/sidekiq.yml -d &&
               rm -f tmp/pids/server.pid &&
               bundle exec rails server -b 0.0.0.0'
-  
-  life_frontend:
-    build: ./life-frontend/
-    container_name: life_frontend
-    privileged: true
-    tty: true
-    stdin_open: true
-    volumes:
-      - life-frontend-sync:/app
-    ports:
-      - "3001:3000"
 
 volumes:
-  life-server-sync:
-    external: true
-  life-frontend-sync:
+  waffle-server-sync:
     external: true
   es-data:
     driver: local

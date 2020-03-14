@@ -15,5 +15,5 @@ bundle exec docker-sync start
 dcoker-compose up -d
 docker ps -a
 echo "WaffleのDocker環境構築が終わりました！"
-echo "これからbashでlifeコンテナの中に入ります"
-docker-compose exec life bash
+echo "これからbashでwaffleコンテナの中に入ります"
+docker-compose exec waffle bash

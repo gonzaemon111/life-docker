@@ -1,22 +1,22 @@
-# life-docker
+# waffle-docker
 
 ## ディレクトリ構成
 
 ```
-life-docker
+waffle-docker
   ┣━ .gitignore
   ┣━ docker-compose.yml
   ┣━ docker-sync.yml
   ┣━ elastic-search
   ┃      ┗━ dev.Dockerfile
   ┃
-  ┣━ life_server
+  ┣━ waffle_server
   ┃      ┣━ app/
   ┃      ┣━ bin/
   ┃      ┣━ config/
   ┃      ┗━ ...
   ┃
-  ┗━ life-frontend
+  ┗━ waffle-frontend
          ┣━ components/
          ┣━ assets/
          ┣━ static/
@@ -34,10 +34,10 @@ life-docker
 2. **リポジトリをclone**
 
     ```
-    $ git clone git@github.com:gonzaemon111/life-docker.git
-    $ rm -rf life && rm -rf life-frontend
-    $ git clone git@github.com:gonzaemon111/life.git
-    $ git clone git@github.com:gonzaemon111/life-frontend.git
+    $ git clone git@github.com:gonzaemon111/waffle-docker.git
+    $ rm -rf waffle && rm -rf waffle-frontend
+    $ git clone git@github.com:gonzaemon111/waffle.git
+    $ git clone git@github.com:gonzaemon111/waffle-frontend.git
     ```
 
 3. **DockerSyncに必要な諸々をインストール**
@@ -46,7 +46,7 @@ life-docker
     $ brew install unison
     $ brew tap eugenmayer/dockersync
     $ brew install eugenmayer/dockersync/unox
-    $ pwd (current-directoriがlife-dokcerであることを確認)
+    $ pwd (current-directoriがwaffle-dokcerであることを確認)
     $ bundle install
     ```
 
@@ -86,8 +86,8 @@ life-docker
 
     ```
     $ docker exec -it [コンテナ名] [シェルの指定]
-    $ docker exec -it life bash  (Rails側)
-    $ docker exec -it life_frontend sh  (Nuxt側)
+    $ docker exec -it waffle bash  (Rails側)
+    $ docker exec -it waffle_frontend sh  (Nuxt側)
     ```
 
 * 注意事項
@@ -122,10 +122,10 @@ $ ./dc_up.sh build
 
 ----
 
-### `life/app`ディレクトリの配下について
+### `waffle/app`ディレクトリの配下について
 
 ```
-life/app
+waffle/app
   ┣━ admin (管理画面用のモデル群)
   ┣━ assets
   ┣━ batches (バッチ処理 ※基本的にはworkerからの移譲を待つ)

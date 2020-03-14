@@ -1,5 +1,3 @@
-life-frontend
-life
 .docker-sync/*
 .vscode/
 variables.env

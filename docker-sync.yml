@@ -3,8 +3,8 @@ options:
   verbose: true
   max-attempt: 30
 syncs:
-  life-server-sync:
-    src: './life/'
+  waffle-server-sync:
+    src: './waffle/'
     notify_terminal: true
     sync_host_ip: '0.0.0.0'
     sync_host_port: '5000'
@@ -15,11 +15,3 @@ syncs:
       '*.scss', '*.sass', 'log', 'tmp', '.cache/',
       '.bundle', '.bash_history'
     ]
-  life-frontend-sync:
-    src: './life-frontend/'
-    notify_terminal: true
-    sync_host_ip: '0.0.0.0'
-    sync_host_port: '6000'
-    sync_strategy: 'unison'
-    sync_userid: '4000'
-    sync_excludes: ['node_modules', '.git', '.gitignore', '*.coffee']
